@@ -27,6 +27,9 @@ c(0, 1, 1, 2, 3, 5)
 # A atribuição é na direção da seta =)
 c(0, 1, 1, 2, 3, 5) -> init_fibonacci
 
+init_fibonacci + 1
+c(0, 1, 1, 2, 3, 5) 
+
 #' 
 #' Atomic vectors são estruturas planas, não permitindo que um vetor seja composto de outros vetores. O exemplo abaixo demonstra que a tentativa de aninhar vetores resulta em um vetor plano idêntico ao vetor criado no exemplo anterior.
 #' 
@@ -47,7 +50,7 @@ answer <- 42
 if(is.atomic(answer)) print("É atômico.")
 if(is.numeric(answer)) print("É numérico")
 if(length(answer) == 1) print("Tamanho 1") 
-
+length(init_fibonacci)
 #' 
 #' Os elementos de um vetor podem ser acessados através do índice, sempre lembrando que vetores em R são indexados a partir de 1.
 #' 
@@ -73,6 +76,8 @@ seq_10_from_2[seq_10_from_2 > 6]
 # Os 3 primeiros elementos, pela sua posição
 seq_10_from_2[1:3]
 
+print("teste")
+
 #' 
 #' O operador `:` e a função `seq` produzem o mesmo resultado quando a função `seq` é aplicada com os dois primeiros parâmetros informados. A função `seq` é mais flexível, conforme demonstrado no segundo exemplo de uso. Percebam que os parâmetros de uma função são nomeados e podem ser informados junto aos valores atribuídos na chamada da função. Esta é uma prática recomendada para clareza.
 #' 
@@ -95,7 +100,7 @@ seq(from=0, to=5, by=.5)
 resposta <- list(7, '*', 6, '=', list(42), c("quarenta", "e", "dois"))
 
 # A função glimpse apresenta uma prévia do conteúdo da lista passada como parâmetro. A função `str` atende o mesmo propósito.
-dplyr::glimpse(resposta)
+#dplyr::glimpse(resposta)
 str(resposta)
 
 #' 
