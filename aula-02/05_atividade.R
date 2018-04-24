@@ -7,9 +7,24 @@ load("aula-02/data/dados_exercicio.RData")
 ### 1 ####
 ## Inicie mostrando uma prévia do conteúdo da variável acessos_alunos
 ## 
+print(acessos_alunos[2])
+str(acessos_alunos)
+
+print(acessos_alunos[acessos_alunos["alu201830307"]])
+
+
 ## Dica 1: No material sobre estruturas de dados vimos como exibir uma prévia do conteúdo de uma variável com 2 funções diferentes
+## -> 
 ## Dica 2: Na primeira aula vimos uma função do RStudio que permite visualizar o conteúdo de uma variável, mas neste caso 
 ##         quero ver uma saída na Console.
+paste(acessos_alunos)
+print(acessos_alunos)
+
+
+print(acessos_alunos["alu201830307"])
+
+
+## ->   
 ### # ####
 
 
@@ -17,8 +32,13 @@ load("aula-02/data/dados_exercicio.RData")
 ### 2 ###
 ## Quantos elementos a variável acessos_alunos possui? Utilize uma função do R que retorna o tamanho da variável.
 
+length(acessos_alunos)
+
 ## Dica: Vimos um exemplo no mesmo material sobre estruturas de dados
 ### # ###
+
+
+print("aaaaaaaa")
 
 
 
@@ -26,6 +46,13 @@ load("aula-02/data/dados_exercicio.RData")
 ## Utilizando o seu código de aluno da Uniritter como nome de um valor da lista, imprima uma linha informando quantos acessos
 ## você fez. A linha deve ser impressa na Console, com um texto que diga o seu código de aluno e o valor conforme o seguinte exemplo:
 ## "O aluno <alu...> realizou N acessos."
+
+
+"O aluno <alu...> realizou N acessos."
+
+print(acessos_alunos["alu201830307"])
+
+
 
 ## Dica 1: Utilize a função paste() para composição do texto que será impresso. 
 ## Dica 2: Vimos exemplos disto nos materiais dos tipos numéricos e das estruturas de dados.
