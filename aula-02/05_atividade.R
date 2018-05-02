@@ -151,7 +151,7 @@ for(i in 1:length(notas_guest))
 # R: NA contém um indicador de valor ausente, oque para valores numéricos não permite a correta funcionadalidade quando não tratado, diferentemente de NULL que seria a ausencia de valor
 
 # 3. Qual o resultado do uso da função sum na presença de NA? O que você conclui sobre a operação de soma de todos os valores de
-#    um vetor na presença de NA?
+#    um vetor na presença de NA 
 # R: quando da presença de NA em que não é previsto/tratado, interfere no processamento da função, oque não permite o correto funcionamento.
 
 
