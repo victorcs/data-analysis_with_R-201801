@@ -143,11 +143,61 @@ subset_salarios %>%
 print("Atividade")
 ## Modificar o Dataset para criação de nova variável
 
+subset_com_ano <- subset_salarios %>%
+  mutate(ano_ingresso = year(DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO))
+
 ## Determine o tempo médio de trabalho em anos, em nível nacional
+subset_com_ano %>%
+  summarise(tempo_medio = mean(year(today() - ano_ingresso)))
+
+
 
 ## Determine o tempo médio de trabalho em anos, por UF
+subset_com_ano %>%
+  group_by(UF_EXERCICIO) %>%
+  summarise(tempo_medio = mean(year(today() - ano_ingresso))) %>%
+   arrange(desc(tempo_medio)) %>% view()
+
 
 ## Determine a média salarial por ano de ingresso
+subset_com_ano %>%
+  group_by(ano_ingresso) %>%
+    summarise(tempo_medio = mean(year(today() - ano_ingresso))) %>%
+      arrange(desc(tempo_medio)) %>% view()
+
+
+library(lubridate)
+
+
+## VICTOR  ------------------------------------------------------------------------
+
+
+
+
+subset_salarios %>%
+  mutate(ano_ingresso = year(DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO)) %>%
+   group_by(UF_EXERCICIO) %>%
+     summarize(mean(ano_ingresso))
+  
+
+
+
+
+
+
+
+subset_salarios %>%
+  mutate(residuo = REMUNERACAO_REAIS - mean(REMUNERACAO_REAIS)) %>%
+  select(residuo) %>%
+  mutate(ganho = if_else( sign(residuo) == 1, "ACIMA", "ABAIXO")) %>%
+  group_by(ganho) %>%
+  summarise(soma_residuo = sum(residuo), servidores = n()) %>%
+  ungroup()
+
+
+
+
+
 
 
 #' >> FIM DA ATIVIDADE

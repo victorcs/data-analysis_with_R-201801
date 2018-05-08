@@ -8,6 +8,9 @@
 ## ----echo=FALSE, message=FALSE, warning=FALSE----------------------------
 library(tidyverse)
 
+#install.packages("tidyverse")
+
+
 #' 
 #' 
 #' ## Data Frame
