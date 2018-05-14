@@ -245,6 +245,34 @@ subset_salarios %>%
 ## ------------------------------------------------------------------------
 print("Atividade")
 
+# VICTOR 14/05
+subset_salarios %>%
+  group_by(UF_EXERCICIO) %>%
+  summarise(salario_medio = mean(REMUNERACAO_REAIS)
+           , servidores = n()
+           , mediana_salario = median(REMUNERACAO_REAIS)
+           , media_maior = salario_medio > mediana_salario) %>%
+  ungroup() %>%
+  group_by(media_maior) %>%
+  summarise(total = n()) %>%
+  ungroup()
+
+
+#-----------
+#(subset_salarios %>%
+#    group_by(UF_EXERCICIO) %>%
+#    summarise( salario_medio = mean(REMUNERACAO_REAIS)
+#               , servidores = n()
+#               , mediana_salario = median(REMUNERACAO_REAIS)
+#               , media_maior - salario_medio > mediana_salario) %>%
+#                ungroup() %>%    
+#  
+
+#media_maior <- media_salario????
+  
+  
+
+
 ## Código aqui
 
 #' 
@@ -253,6 +281,38 @@ print("Atividade")
 #' Qual sua justificativa para a quantidade de casos onde a mediana foi maior que a média? Dica: Observe o gráfico que mostra a média e a mediana. Há cauda longa? Em qual direção?
 #' 
 #' ``` SUA RESPOSTA AQUI ```
+#' 
+
+sd( subset_salarios$REMUNERACAO_REAIS ) # DESVIO PADRAO = SD()
+
+
+dois_desvios <- 2 * sd( subset_salarios$REMUNERACAO_REAIS )
+
+media  <- mean(subset_salarios$REMUNERACAO_REAIS )
+
+dois_desvios_da_media <- media + dois_desvios
+
+subset_salarios %>%
+    filter(REMUNERACAO_REAIS <= dois_desvios_da_media) %>%
+    nrow() -> total_dentro_de_dois_desvios
+
+total_dentro_de_dois_desvios / nrow(subset_salarios)
+
+
+#OUTRA FORMA
+subset_salarios %>%
+  mutate(qtde_abaixo_2sd = REMUNERACAO_REAIS <= dois_desvios_da_media
+         , n_linhas = n()) %>%
+  count(qtde_abaixo_2sd)
+
+
+  
+
+  
+
+
+#' 
+#' 
 #' 
 #' >> FIM DA ATIVIDADE
 #' 
@@ -337,6 +397,20 @@ subset_salarios %>%
 #' 
 ## ------------------------------------------------------------------------
 print("Atividade")
+# VICTOR 14/05
+subset_salarios %>%
+  group_by(UF_EXERCICIO) %>%
+  summarise(salario_medio = mean(REMUNERACAO_REAIS)
+            , servidores = n()
+            , mediana_salario = median(REMUNERACAO_REAIS)
+            , media_maior = salario_medio > mediana_salario) %>%
+  ungroup() %>%
+  group_by(media_maior) %>%
+  summarise(total = n()) %>%
+  ungroup()
+
+
+
 
 ## Código aqui
 
