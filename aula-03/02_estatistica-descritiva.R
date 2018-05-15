@@ -144,6 +144,7 @@ print("Atividade")
 ## Modificar o Dataset para criação de nova variável
 
 subset_com_ano <- subset_salarios %>%
+<<<<<<< HEAD
   mutate(ano_ingresso = year(DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO))
 
 ## Determine o tempo médio de trabalho em anos, em nível nacional
@@ -151,17 +152,30 @@ subset_com_ano %>%
   summarise(tempo_medio = mean(year(today() - ano_ingresso)))
 
 
+=======
+  mutate(ano_ingresso = year(DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO)) 
+
+## Determine o tempo médio de trabalho em anos, em nível nacional
+subset_com_ano %>%
+  summarise(tempo_medio = mean(year(today()) - ano_ingresso))
+>>>>>>> upstream/master
 
 ## Determine o tempo médio de trabalho em anos, por UF
 subset_com_ano %>%
   group_by(UF_EXERCICIO) %>%
+<<<<<<< HEAD
   summarise(tempo_medio = mean(year(today() - ano_ingresso))) %>%
    arrange(desc(tempo_medio)) %>% view()
 
+=======
+  summarise(tempo_medio = mean(year(today()) - ano_ingresso)) %>%
+  arrange(desc(tempo_medio)) %>% View()
+>>>>>>> upstream/master
 
 ## Determine a média salarial por ano de ingresso
 subset_com_ano %>%
   group_by(ano_ingresso) %>%
+<<<<<<< HEAD
     summarise(tempo_medio = mean(year(today() - ano_ingresso))) %>%
       arrange(desc(tempo_medio)) %>% view()
 
@@ -197,6 +211,10 @@ subset_salarios %>%
 
 
 
+=======
+  summarise(media_salarial = mean(REMUNERACAO_REAIS)) %>%
+  arrange(desc(media_salarial))
+>>>>>>> upstream/master
 
 
 
@@ -422,6 +440,39 @@ subset_salarios %>%
 ## ------------------------------------------------------------------------
 print("Atividade")
 
+
+#VICTOR
+
+subset_salarios %>%
+  count(DESCRICAO_CARGO)  %>%
+  filter(n > 100) -> cargos_populares
+
+
+subset_salarios %>%
+  filter(DESCRICAO_CARGO %in% cargos_populares$DESCRICAO_CARGO)
+
+subset_salarios  %>%
+  group_by(DESCRICAO_CARGO)  %>%
+  filter(n() > 100)  %>%
+  summarise( desbio_padrao = sd(REMUNERACAO_REAIS)
+             , media = mean(REMUNERACAO_REAIS)
+             , cv = desbio_padrao / media
+             , qtde_servidores = n()
+             , menor_salario = min(REMUNERACAO_REAIS)
+             , maior_salario = max(REMUNERACAO_REAIS)) %>%
+  ungroup()    %>%
+  arrange(cv)  %>%
+  head(10)
+  
+  
+
+
+
+
+    
+  
+
+
 ## Código aqui
 
 #' 
@@ -483,3 +534,11 @@ subset_salarios %>%
 
 #' 
 #' 
+ocorrencias_remuneracoes <- table(subset_salarios$REMUNERACAO_REAIS)
+
+(moda_salario <- as.numeric(names(sort(ocorrencias_remuneracoes, decreasing = TRUE))[1]))
+
+set.seed(1234)
+valores_aleatorios_uniforme <- runif(n = 300, min = 1000, max = 5000)
+
+ocorrencias_valores_aleatorios <- table(valores_aleatorios_uniforme)
