@@ -14,6 +14,10 @@ salarios <- read_csv("aula-03/data/201802_dados_salarios_servidores.csv.gz")
 ## 
 ### # ####
 
+salarios$REMUNERACAO_FINAL <- salarios$REMUNERACAO_REAIS + (salarios$REMUNERACAO_DOLARES * 3.2421)
+
+salarios %>%
+  filter(REMUNERACAO_FINAL >= 900)
 
 ### 2 ####
 ## 
@@ -22,10 +26,20 @@ salarios <- read_csv("aula-03/data/201802_dados_salarios_servidores.csv.gz")
 ## Além de listar os 5 cargos e as quantidades, crie um vetor com os nomes destes 5 cargos. Crie este vetor com o nome de cargos_diferente_lotacao.
 ## 
 ## Dica: a função pull() do dplyr extrai uma variável em formato de vetor.
+
 salarios %>% count(UF_EXERCICIO) %>% pull(UF_EXERCICIO) -> ufs # EXEMPLO
+
 ## 
 ### # ####
+salarios %>%
+  filter(ORG_LOTACAO != ORGSUP_EXERCICIO) %>%
+  group_by(DESCRICAO_CARGO) %>%
+  summarise(cont = n()) %>%
+  arrange(desc(cont)) %>%
+  head(5) %>%
+  pull(DESCRICAO_CARGO) -> cargos_diferente_lotacao
 
+print(cargos_diferente_lotacao)
 
 ### 3 ####
 ## 

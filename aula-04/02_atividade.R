@@ -20,6 +20,46 @@ library(lubridate)
 ## 
 ### # ####
 
+calc_grau_correlacao <- function(x)
+{
+  if (x <= 0.3) 
+  {
+    "Desprezível"
+  } else if (x <= 0.5) 
+  {
+    "Fraca"
+  } else if (x <= 0.7) 
+  {
+    "Moderada"
+  } else if (x <= 0.9) 
+  {
+    "Forte"
+  } else 
+  {
+    "Muito forte"
+  }
+}
+salarios <- read_csv("aula-03/data/201802_dados_salarios_servidores.csv.gz")
+salarios$REMUNERACAO_FINAL <- salarios$REMUNERACAO_REAIS + (salarios$REMUNERACAO_DOLARES * 3.2421)
+salarios %>%
+  filter(REMUNERACAO_FINAL >= 900) -> resultado_salarios
+
+
+resultado_salarios %>%
+  group_by(DESCRICAO_CARGO) %>%
+  filter(n() >= 200) %>%
+  summarise(COEFICIENTE_CORRELACAO = cor(year(DATA_INGRESSO_ORGAO), year(DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO)),
+            CORRELACAO_POSITIVA = COEFICIENTE_CORRELACAO > 0,
+            GRAU_CORRELACAO = calc_grau_correlacao(abs(COEFICIENTE_CORRELACAO))) %>%
+  ungroup() %>%
+  select(DESCRICAO_CARGO, COEFICIENTE_CORRELACAO, CORRELACAO_POSITIVA, GRAU_CORRELACAO) -> resultado_final
+
+
+resultado_final
+
+
+
+
 ### 2 ###
 ##
 ## - A partir do dataset do exercício anterior, selecione os 10 cargos de correlação mais forte (seja positiva ou negativa) e os 
@@ -29,4 +69,45 @@ library(lubridate)
 ##   (caso haja diferença)
 ##
 ### # ###
+
+
+resultado_final %>%
+  arrange(desc(abs(COEFICIENTE_CORRELACAO))) %>%
+  head(10) -> top10_fortes
+
+resultado_final %>%
+  arrange(abs(COEFICIENTE_CORRELACAO)) %>%
+  head(10) -> top10_fracos
+
+(merge(top10_fortes, top10_fracos, all = TRUE)) -> res_fracos_fortes
+
+
+cargos <- res_fracos_fortes %>% pull(DESCRICAO_CARGO)
+
+
+MODA_ORGSUP_LOTACAO <- resultado_salarios %>%
+  filter(DESCRICAO_CARGO %in% cargos) %>%
+  group_by(ORGSUP_LOTACAO) %>%
+  summarise(qtd = n()) %>%
+  ungroup() %>%
+  arrange(desc(qtd)) %>%
+  head(1) %>% 
+  select(ORGSUP_LOTACAO)
+
+MODA_ORGSUP_EXERCICIO <- resultado_salarios %>%
+  filter(DESCRICAO_CARGO %in% cargos) %>%
+  group_by(ORGSUP_EXERCICIO) %>%
+  summarise(qtd = n()) %>%
+  ungroup() %>%
+  arrange(desc(qtd)) %>%
+  head(1) %>% 
+  select(ORGSUP_EXERCICIO)
+
+paste("Moda ORGSUP_LOTACAO: ", MODA_ORGSUP_LOTACAO)
+
+
+paste("Moda ORGSUP_EXERCICIO: ", MODA_ORGSUP_EXERCICIO)
+
+
+print("Há diferença entre as MODAS")
 
